@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maria Nathasha — Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16213E;
+    --ink-soft:#3B4667;
+    --paper:#F6F4EE;
+    --paper-raise:#FFFFFF;
+    --yellow:#FFC53D;
+    --indigo:#6C63FF;
+    --indigo-tint:#ECEBFF;
+    --teal:#1FAE9F;
+    --teal-tint:#E4F5F2;
+    --coral:#FF6F59;
+    --coral-tint:#FFEAE6;
+    --line:rgba(22,33,62,0.14);
+    --radius:14px;
+    --display:'Space Grotesk', sans-serif;
+    --body:'IBM Plex Sans', sans-serif;
+    --mono:'IBM Plex Mono', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  img,svg{display:block;max-width:100%;}
+
+  .wrap{
+    max-width:900px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  ::selection{background:var(--yellow); color:var(--ink);}
+  :focus-visible{outline:2px solid var(--indigo); outline-offset:3px; border-radius:4px;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky; top:0; z-index:40;
+    background:rgba(246,244,238,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:900px; margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-name{
+    font-family:var(--display); font-weight:600; font-size:1.05rem;
+    text-decoration:none;
+  }
+  .nav-links{
+    display:flex; gap:26px; list-style:none; margin:0; padding:0;
+  }
+  .nav-links a{
+    font-family:var(--mono); font-size:0.85rem; text-decoration:none;
+    color:var(--ink-soft); border-bottom:1px solid transparent;
+    padding-bottom:2px; transition:color .15s ease, border-color .15s ease;
+  }
+  .nav-links a:hover{ color:var(--ink); border-color:var(--ink); }
+  .nav-toggle{ display:none; }
+
+  @media (max-width:640px){
+    .nav-links{ gap:16px; }
+    .nav-links a{ font-size:0.75rem; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding:56px 0 40px; }
+  .editor{
+    background:var(--paper-raise);
+    border:1.5px solid var(--ink);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  .editor-bar{
+    display:flex; align-items:center; gap:16px;
+    padding:12px 18px;
+    border-bottom:1.5px solid var(--ink);
+    background:var(--ink);
+  }
+  .dots{ display:flex; gap:7px; }
+  .dots span{ width:10px; height:10px; border-radius:50%; display:block; }
+  .dots span:nth-child(1){ background:#FF6F59; }
+  .dots span:nth-child(2){ background:#FFC53D; }
+  .dots span:nth-child(3){ background:#1FAE9F; }
+  .editor-tab{
+    font-family:var(--mono); font-size:0.78rem; color:#F6F4EE;
+    opacity:0.85;
+  }
+
+  .editor-body{ padding:44px 34px 40px; }
+
+  .badge-row{
+    display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px;
+    opacity:0; transform:translateY(8px);
+    animation:rise .5s ease forwards; animation-delay:.05s;
+  }
+  .badge{
+    font-family:var(--mono); font-size:0.75rem;
+    padding:5px 11px; border-radius:100px;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .badge .pulse{
+    width:6px; height:6px; border-radius:50%; background:var(--teal);
+    box-shadow:0 0 0 3px var(--teal-tint);
+  }
+
+  h1.headline{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(2.1rem, 5.2vw, 3.4rem);
+    line-height:1.08;
+    margin:0 0 18px;
+    letter-spacing:-0.01em;
+    opacity:0; transform:translateY(10px);
+    animation:rise .55s ease forwards; animation-delay:.15s;
+  }
+  h1.headline .hl{
+    background:linear-gradient(180deg, transparent 62%, var(--yellow) 62%);
+  }
+
+  .lede{
+    max-width:56ch;
+    font-size:1.08rem;
+    color:var(--ink-soft);
+    margin:0 0 30px;
+    opacity:0; transform:translateY(10px);
+    animation:rise .55s ease forwards; animation-delay:.25s;
+  }
+
+  .cta-row{
+    display:flex; flex-wrap:wrap; gap:12px;
+    opacity:0; transform:translateY(10px);
+    animation:rise .55s ease forwards; animation-delay:.35s;
+  }
+  .btn{
+    font-family:var(--body); font-weight:600; font-size:0.92rem;
+    padding:12px 20px; border-radius:100px;
+    text-decoration:none; display:inline-block;
+    border:1.5px solid var(--ink);
+    transition:background .15s ease, color .15s ease;
+  }
+  .btn.primary{ background:var(--ink); color:var(--paper); }
+  .btn.primary:hover{ background:var(--indigo); border-color:var(--indigo); }
+  .btn.ghost{ background:transparent; color:var(--ink); }
+  .btn.ghost:hover{ background:var(--ink); color:var(--paper); }
+
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+  @media (prefers-reduced-motion: reduce){
+    .badge-row,h1.headline,.lede,.cta-row{ animation:none; opacity:1; transform:none; }
+    html{ scroll-behavior:auto; }
+  }
+
+  /* ---------- SECTION SCAFFOLDING ---------- */
+  section{ padding:52px 0; border-top:1px solid var(--line); }
+  .tag{
+    font-family:var(--mono); font-size:0.82rem; color:var(--indigo);
+    margin:0 0 10px; display:block;
+  }
+  h2.h-title{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(1.5rem, 3.2vw, 2rem);
+    margin:0 0 8px;
+  }
+  .h-sub{ color:var(--ink-soft); max-width:56ch; margin:0 0 30px; }
+
+  /* ---------- ABOUT ---------- */
+  .about-text{ max-width:64ch; font-size:1.02rem; }
+  .about-text p{ margin:0 0 16px; }
+
+  /* ---------- SKILLS ---------- */
+  .skill-group{ margin-bottom:22px; }
+  .skill-group:last-child{ margin-bottom:0; }
+  .skill-group h3{
+    font-family:var(--body); font-weight:600; font-size:0.88rem;
+    color:var(--ink-soft); margin:0 0 10px;
+  }
+  .pills{ display:flex; flex-wrap:wrap; gap:8px; }
+  .pill{
+    font-family:var(--mono); font-size:0.82rem;
+    padding:6px 13px; border-radius:8px;
+    border:1px solid var(--line);
+  }
+  .pill.c-indigo{ background:var(--indigo-tint); border-color:transparent; }
+  .pill.c-teal{ background:var(--teal-tint); border-color:transparent; }
+  .pill.c-coral{ background:var(--coral-tint); border-color:transparent; }
+  .pill.c-yellow{ background:#FFF4DA; border-color:transparent; }
+  .pill.c-outline{ background:transparent; border-color:var(--ink); }
+
+  /* ---------- PROJECTS ---------- */
+  .projects{ display:flex; flex-direction:column; gap:18px; }
+  .project{
+    border:1.5px solid var(--ink);
+    border-radius:var(--radius);
+    padding:26px 26px 24px;
+  }
+  .project.c1{ background:var(--paper-raise); }
+  .project.c2{ background:var(--indigo-tint); }
+  .project.c3{ background:var(--teal-tint); }
+  .project-top{
+    display:flex; justify-content:space-between; align-items:baseline;
+    gap:16px; flex-wrap:wrap; margin-bottom:10px;
+  }
+  .project h3{
+    font-family:var(--display); font-weight:600; font-size:1.2rem; margin:0;
+  }
+  .project .impact{
+    font-family:var(--mono); font-size:0.78rem; color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .project .impact.published{
+    color:var(--teal); font-weight:600;
+  }
+  .project p{ margin:0 0 16px; color:var(--ink-soft); max-width:64ch; }
+  .stack{ display:flex; flex-wrap:wrap; gap:7px; align-items:center; }
+  .stack span{
+    font-family:var(--mono); font-size:0.72rem;
+    padding:4px 9px; border-radius:6px;
+    background:var(--paper-raise); border:1px solid var(--line);
+  }
+  .pub-link{
+    font-family:var(--mono); font-size:0.78rem;
+    color:var(--ink); text-decoration:underline;
+    text-underline-offset:3px;
+    display:inline-flex; align-items:center; gap:5px;
+    margin-top:14px;
+  }
+  .pub-link:hover{ color:var(--indigo); }
+
+  /* ---------- CERTIFICATIONS ---------- */
+  .cert-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:14px;
+  }
+  @media (max-width:640px){ .cert-grid{ grid-template-columns:1fr; } }
+  .cert{
+    border:1px solid var(--line); border-radius:12px;
+    padding:18px 18px 16px; background:var(--paper-raise);
+    display:flex; gap:13px; align-items:flex-start;
+  }
+  .cert-dot{
+    width:9px; height:9px; border-radius:50%; margin-top:6px; flex-shrink:0;
+  }
+  .cert:nth-child(6n+1) .cert-dot{ background:var(--indigo); }
+  .cert:nth-child(6n+2) .cert-dot{ background:var(--teal); }
+  .cert:nth-child(6n+3) .cert-dot{ background:var(--coral); }
+  .cert:nth-child(6n+4) .cert-dot{ background:var(--yellow); }
+  .cert:nth-child(6n+5) .cert-dot{ background:var(--indigo); }
+  .cert:nth-child(6n+6) .cert-dot{ background:var(--teal); }
+  .cert h4{ font-family:var(--body); font-weight:600; font-size:0.95rem; margin:0 0 4px; }
+  .cert .meta{ font-family:var(--mono); font-size:0.72rem; color:var(--ink-soft); margin:0 0 6px; }
+  .cert p{ margin:0; font-size:0.87rem; color:var(--ink-soft); }
+
+  /* ---------- VOLUNTEERING ---------- */
+  .timeline{ position:relative; padding-left:26px; }
+  .timeline::before{
+    content:''; position:absolute; left:5px; top:6px; bottom:6px;
+    width:1.5px; background:var(--line);
+  }
+  .t-item{ position:relative; padding-bottom:28px; }
+  .t-item:last-child{ padding-bottom:0; }
+  .t-item::before{
+    content:''; position:absolute; left:-26px; top:5px;
+    width:11px; height:11px; border-radius:50%;
+    background:var(--paper); border:2px solid var(--indigo);
+  }
+  .t-org{ font-family:var(--display); font-weight:600; font-size:1.05rem; margin:0 0 2px; }
+  .t-role{ font-weight:600; font-size:0.92rem; margin:0 0 2px; }
+  .t-time{ font-family:var(--mono); font-size:0.76rem; color:var(--ink-soft); margin:0 0 8px; }
+  .t-item p.desc{ margin:0; color:var(--ink-soft); max-width:60ch; font-size:0.94rem; }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{
+    background:var(--ink); color:var(--paper);
+    padding:56px 0 34px; margin-top:20px;
+  }
+  footer .tag{ color:var(--yellow); }
+  footer h2.h-title{ color:var(--paper); margin-bottom:28px; }
+  footer .h-sub{ color:rgba(246,244,238,0.7); }
+  .contact-links{ display:flex; flex-wrap:wrap; gap:12px; margin-bottom:40px; }
+  .contact-links a{
+    font-family:var(--body); font-weight:600; font-size:0.92rem;
+    text-decoration:none; padding:12px 20px; border-radius:100px;
+    border:1.5px solid var(--paper); color:var(--paper);
+    transition:background .15s ease, color .15s ease;
+  }
+  .contact-links a:hover{ background:var(--paper); color:var(--ink); }
+  .foot-bottom{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-family:var(--mono); font-size:0.76rem; color:rgba(246,244,238,0.55);
+    padding-top:22px; border-top:1px solid rgba(246,244,238,0.15);
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-name" href="#top">Maria Nathasha</a>
+    <ul class="nav-links">
+      <li><a href="#work">work</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#certs">certs</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div id="top" class="wrap hero">
+  <div class="editor">
+    <div class="editor-bar">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <div class="editor-tab">maria.dev — README.md</div>
+    </div>
+    <div class="editor-body">
+      <div class="badge-row">
+        <span class="badge"><span class="pulse"></span>open to work</span>
+        <span class="badge">CS grad, 2026</span>
+        <span class="badge">Kochi, Kerala</span>
+      </div>
+      <h1 class="headline">Hey, I'm Maria,<br> I learn. I build. I make  <span class="hl">things happen.</span></h1>
+      <div class="cta-row">
+        <a class="btn primary" href="#work">See my work</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <span class="tag">// about</span>
+    <h2 class="h-title">A bit about how I work</h2>
+    <div class="about-text">
+      <p>I like turning inefficient, manual processes into software people actually want to use. That's what drew me to full-stack development, and eventually made me curious about what happens beneath the surface, leading me to explore explainable AI.</p>
+      <p>Outside of code, I spend a lot of time coordinating people and running events. It's taught me that shipping good software and running a good event have a lot in common - both come down to planning early, communicating clearly, and staying calm when something breaks two hours before the deadline.</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <span class="tag">// skills</span>
+    <h2 class="h-title">What I work with</h2>
+    <p class="h-sub">A mix of languages, frameworks, and the cloud fundamentals I picked up along the way.</p>
+
+    <div class="skill-group">
+      <h3>Languages</h3>
+      <div class="pills">
+        <span class="pill c-indigo">Python</span>
+        <span class="pill c-indigo">C</span>
+        <span class="pill c-indigo">Java</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h3>Web &amp; backend</h3>
+      <div class="pills">
+        <span class="pill c-teal">HTML</span>
+        <span class="pill c-teal">CSS</span>
+        <span class="pill c-teal">JavaScript</span>
+        <span class="pill c-teal">Bootstrap</span>
+        <span class="pill c-teal">EJS</span>
+        <span class="pill c-teal">Node.js</span>
+        <span class="pill c-teal">Express.js</span>
+        <span class="pill c-teal">Flask</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h3>Data &amp; cloud</h3>
+      <div class="pills">
+        <span class="pill c-coral">Sequelize</span>
+        <span class="pill c-coral">SQLite</span>
+        <span class="pill c-coral">SQL</span>
+        <span class="pill c-coral">Microsoft Azure</span>
+        <span class="pill c-coral">AWS Fundamentals</span>
+        <span class="pill c-coral">DevOps Foundations</span>
+        <span class="pill c-coral">Transformer Models</span>
+        <span class="pill c-coral">Matplotlib</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h3>Tools</h3>
+      <div class="pills">
+        <span class="pill c-yellow">Git</span>
+        <span class="pill c-yellow">GitHub</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h3>People stuff</h3>
+      <div class="pills">
+        <span class="pill c-outline">Communication</span>
+        <span class="pill c-outline">Stakeholder management</span>
+        <span class="pill c-outline">Event coordination</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <span class="tag">// projects</span>
+    <h2 class="h-title">Things I've shipped</h2>
+    <p class="h-sub">A few builds I’m proud of</p>
+
+    <div class="projects">
+      
+<div class="project c1">
+        <div class="project-top">
+          <h3>Explainable Transformer for Electricity Load Forecasting</h3>
+          <span class="impact published">Published · IEEE Xplore</span>
+        </div>
+        <p>Built a Transformer-based model to forecast electricity demand, combining correlation-aware feature engineering with explainable AI so the predictions stay interpretable, not just accurate.</p>
+        <div class="stack">
+          <span>Python</span><span>Transformer Models</span><span>Explainable AI</span>
+        </div>
+        <a class="pub-link" href="https://lnkd.in/gbV-ZXJz" target="_blank" rel="noopener">Published in IEEE Xplore, IC3SIS 2026 ↗</a>
+      </div>
+      <div class="project c2">
+        <div class="project-top">
+          <h3>Academic Personnel Information Portal</h3>
+          <span class="impact">~50% faster data access</span>
+        </div>
+        <p>Rebuilt how academic staff records were organized and retrieved, making department data management noticeably faster and less error-prone.</p>
+        <div class="stack">
+          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Node.js</span><span>Express.js</span><span>SQLite</span>
+        </div>
+      </div>
+<div class="project c3">
+        <div class="project-top">
+          <h3>InstaGate — Hostel Gate Pass System</h3>
+          <span class="impact">~60% less manual effort</span>
+        </div>
+        <p>Replaced a paper-based hostel gate pass process with a digital system, cutting down the manual work involved in tracking student entries and exits.</p>
+        <div class="stack">
+          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Flask</span><span>SQLite</span>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<section id="certs">
+  <div class="wrap">
+    <span class="tag">// certifications</span>
+    <h2 class="h-title">Certifications &amp; programs</h2>
+    <p class="h-sub">Cloud, DevOps, web development, and data fundamentals I’ve picked up.</p>
+
+    <div class="cert-grid">
+      <div class="cert">
+        <span class="cert-dot"></span>
+        <div>
+          <h4>Microsoft Certified: Azure Fundamentals</h4>
+          <p class="meta">Microsoft · Aug 2026</p>
+          <p>Understanding of Azure cloud services, core concepts, and fundamentals.</p>
+        </div>
+      </div>
+      <div class="cert">
+        <span class="cert-dot"></span>
+        <div>
+          <h4>DevOps Fundamentals</h4>
+          <p class="meta">IBM · Mar 2026</p>
+          <p>DevOps fundamentals for building, testing, and delivering software efficiently.</p>
+        </div>
+      </div>
+      <div class="cert">
+        <span class="cert-dot"></span>
+        <div>
+          <h4>AWS Academy Graduate-Cloud Foundations</h4>
+          <p class="meta">AWS Academy · Aug 2025</p>
+          <p>AWS cloud concepts, core services, security, and architecture.</p>
+        </div>
+      </div>
+      <div class="cert">
+        <span class="cert-dot"></span>
+        <div>
+          <h4>IBM SkillsBuild Winter Certification</h4>
+          <p class="meta">IBM · Jan 2025</p>
+          <p>Analyzing data, drawing insights, and visualizing outcomes.</p>
+        </div>
+      </div>
+      <div class="cert">
+        <span class="cert-dot"></span>
+        <div>
+          <h4>Foundations of Project Management</h4>
+          <p class="meta">Google · Aug 2025</p>
+          <p>Core project management principles, from planning through execution.</p>
+        </div>
+      </div>
+      <div class="cert">
+        <span class="cert-dot"></span>
+        <div>
+          <h4>The Joy of Computing using Python</h4>
+          <p class="meta">NPTEL · Apr 2024</p>
+          <p>Python fundamentals, logic-building, and core algorithms.</p>
+        </div>
+      </div>
+      <div class="cert">
+        <span class="cert-dot"></span>
+        <div>
+          <h4>Fundamentals of Digital Marketing</h4>
+          <p class="meta">Google Digital Garage · Jul 2025</p>
+          <p>SEO, SEM basics, and an intro to Google Analytics.</p>
+        </div>
+      </div>
+      <div class="cert">
+        <span class="cert-dot"></span>
+        <div>
+          <h4>CCRC Internship</h4>
+          <p class="meta">May – Aug 2025</p>
+        </div>
+      </div>
+      <div class="cert" style="grid-column: 1 / -1;">
+        <span class="cert-dot"></span>
+        <div>
+          <h4>iPLANET Education Internship</h4>
+          <p class="meta">Sep 2023</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="volunteering">
+  <div class="wrap">
+    <span class="tag">// volunteering</span>
+    <h2 class="h-title">Where else I show up</h2>
+    <p class="h-sub">I’ve always been part of events, organized a few and hosted even more.</p>
+
+    <div class="timeline">
+      <div class="t-item">
+        <p class="t-org">TEDxFISAT</p>
+        <p class="t-role">Event Director</p>
+        <p class="t-time">Oct 2025 – Apr 2026 · 7 mos</p>
+        <p class="desc">Led event planning and coordination, managed teams and stakeholders, and helped run TEDxFISAT events start to finish.</p>
+      </div>
+      <div class="t-item">
+        <p class="t-org">TEDxFISAT</p>
+        <p class="t-role">Speaker Curator</p>
+        <p class="t-time">Dec 2023 – Dec 2025 · 2 yrs 1 mo</p>
+        <p class="desc">Curated and coordinated speakers, managed speaker communication, and helped shape an engaging lineup.</p>
+      </div>
+      <div class="t-item">
+        <p class="t-org">CSE Student Body</p>
+        <p class="t-role">Student Representative</p>
+        <p class="t-time">Oct 2023 – Mar 2026 · 2 yrs 6 mos</p>
+        <p class="desc">Represented students in the CSE department, communicated feedback, and supported departmental activities.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <span class="tag">// say hi</span>
+    <h2 class="h-title">Let's build something.</h2>
+    <div class="contact-links">
+      <a href="https://www.linkedin.com/in/marianathasha" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a href="https://github.com/Nathashamaria" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Maria Nathasha</span>
+      <span>portfolio v1.0</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
